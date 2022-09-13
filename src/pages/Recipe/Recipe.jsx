@@ -1,7 +1,7 @@
 import './Recipe.scss';
 
 const Recipe = () => {
-  return <div></div>;
+  return <div>Recipe</div>;
 };
 
 export default Recipe;
