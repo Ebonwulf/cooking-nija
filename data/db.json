@@ -49,6 +49,18 @@
       "method": "cook",
       "cookingTime": "45 minutes",
       "id": "71QP9nW"
+    },
+    {
+      "title": "Chicken curry",
+      "ingredients": [
+        "chicken",
+        "rice",
+        "spices",
+        "coconut milk"
+      ],
+      "method": "cook stuffs",
+      "cookingTime": "55 minutes",
+      "id": "GlwS_QD"
     }
   ]
 }
