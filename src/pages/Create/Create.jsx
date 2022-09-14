@@ -1,14 +1,27 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import './Create.scss';
 
 const Create = () => {
   const [title, setTitle] = useState('');
   const [method, setMethod] = useState('');
   const [cookingTime, setCookingTime] = useState('');
+  const [newIngredient, setNewIngredient] = useState('');
+  const [ingredients, setIngredients] = useState([]);
+  const ingredientInput = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(title, method, cookingTime);
+    console.log(title, method, cookingTime, ingredients);
+  };
+
+  const handleAdd = (e) => {
+    e.preventDefault();
+    const ing = newIngredient.trim();
+    if (ing && !ingredients.includes(ing)) {
+      setIngredients((prevIngredients) => [...prevIngredients, ing]);
+    }
+    setNewIngredient('');
+    ingredientInput.current.focus();
   };
 
   return (
@@ -22,7 +35,7 @@ const Create = () => {
             onChange={(e) => setTitle(e.target.value)}
             value={title}
             required
-          ></input>
+          />
         </label>
         <label>
           <span>Recipe method: </span>
@@ -32,7 +45,27 @@ const Create = () => {
             required
           />
         </label>
-        {/*ingredients will go here*/}
+
+        <label>
+          <span>Recipe ingredients: </span>
+          <div className='ingredients'>
+            <input
+              type='text'
+              onChange={(e) => setNewIngredient(e.target.value)}
+              value={newIngredient}
+              ref={ingredientInput}
+            />
+            <button className='btn' onClick={handleAdd}>
+              Add
+            </button>
+          </div>
+        </label>
+        <p>
+          Current ingredients:{' '}
+          {ingredients.map((i) => (
+            <em key={i}>{i}, </em>
+          ))}
+        </p>
         <label>
           <span>Cooking time (minutes) </span>
           <input
@@ -40,7 +73,7 @@ const Create = () => {
             onChange={(e) => setCookingTime(e.target.value)}
             value={cookingTime}
             required
-          ></input>
+          />
         </label>
         <button className='btn'>Submit</button>
       </form>
