@@ -6,10 +6,12 @@ import Search from './pages/Search/Search';
 import Recipe from './pages/Recipe/Recipe';
 import './App.scss';
 import ThemeSelector from './components/ThemeSelector/ThemeSelector';
+import { useTheme } from './hooks/useTheme';
 
 function App() {
+  const { mode } = useTheme();
   return (
-    <div className='App'>
+    <div className={`App ${mode}`}>
       <BrowserRouter>
         <NavBar />
         <ThemeSelector />
