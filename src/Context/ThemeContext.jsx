@@ -9,7 +9,7 @@ const themeReducer = (state, action) => {
   switch (action.type) {
     case 'CHANGE_COLOR':
       return { ...state, color: action.payload };
-
+    //the ...state means spread the current state properties, this is for when you have multiple properties that are to be changed.
     default:
       return state;
   }
@@ -18,7 +18,7 @@ const themeReducer = (state, action) => {
 //We can call this change color function and pass in a new color that's going to fire dispatch, where we specify the type and the payload on the action object. And in turn, this fires the theme reducer function, which takes in the current state and the action. We check the action type, and if it's equal to CHANGE_COLOR, then we return a new state object with new color value that then updates the state object that we get back from the use reducer.
 
 export const ThemeProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(themeReducer, { color: 'blue' }); //dispatch is a function that allows us to dispatch a state change. state is the initial state that we specify
+  const [state, dispatch] = useReducer(themeReducer, { color: '#58249c' }); //dispatch is a function that allows us to dispatch a state change. state is the initial state that we specify
 
   const changeColor = (color) => {
     dispatch({ type: 'CHANGE_COLOR', payload: color });

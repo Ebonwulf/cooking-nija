@@ -4,10 +4,10 @@ import SearchBar from '../SearchBar/SearchBar';
 import './NavBar.scss';
 
 const NavBar = () => {
-  const { color, changeColor } = useTheme();
+  const { color } = useTheme();
   return (
     <div className='navbar' style={{ background: color }}>
-      <nav onClick={() => changeColor('blueviolet')}>
+      <nav>
         <Link to='/' className='brand'>
           <h1>Cooking Ninja</h1>
         </Link>
