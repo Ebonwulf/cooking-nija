@@ -16,10 +16,9 @@ const Home = () => {
   useEffect(() => {
     setIsPending(true);
 
-    projectFirestore
-      .collection('recipes')
-      .get()
-      .then((snapshot) => {
+    //by assigning the below code to a const variable we can then return it at the end of the code block as a function call so that when we change pages the code no longer tries to display the realtime snapshot as it it no longer in the DOM
+    const unsub = projectFirestore.collection('recipes').onSnapshot(
+      (snapshot) => {
         if (snapshot.empty) {
           setError('No recipes to load');
           setIsPending(false);
@@ -31,11 +30,13 @@ const Home = () => {
           setData(results);
           setIsPending(false);
         }
-      })
-      .catch((err) => {
+      },
+      (err) => {
         setError(err.message);
         setIsPending(false);
-      });
+      }
+    );
+    return () => unsub();
   }, []);
 
   return (
