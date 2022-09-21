@@ -36,6 +36,7 @@ const Home = () => {
         setIsPending(false);
       }
     );
+    //this return statement uses unsub() inside a function to unsubscribe from the real time snapshot (meaning it stops listening for the change to the snapshot) whenever the page changes from the home page as it no longer exists in the DOM and will cause errors without this.
     return () => unsub();
   }, []);
 
