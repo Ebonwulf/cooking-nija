@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useFetch } from '../../hooks/useFetch';
+import { projectFirestore } from '../../Firebase/config';
 import './Create.scss';
 
 const Create = () => {
@@ -12,19 +12,21 @@ const Create = () => {
   const ingredientInput = useRef(null);
   const history = useHistory();
 
-  const { postData, data, error } = useFetch(
-    'http://localhost:3000/recipes',
-    'POST'
-  );
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    postData({
+    const doc = {
       title,
       ingredients,
       method,
       cookingTime: cookingTime + ' minutes',
-    });
+    };
+
+    try {
+      await projectFirestore.collection('recipes').add(doc);
+      history.push('/');
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleAdd = (e) => {
@@ -36,13 +38,6 @@ const Create = () => {
     setNewIngredient('');
     ingredientInput.current.focus();
   };
-
-  //redirect the user when we get data response
-  useEffect(() => {
-    if (data) {
-      history.push('/');
-    }
-  }, [data, history]);
 
   return (
     <div className='create'>
@@ -57,15 +52,6 @@ const Create = () => {
             required
           />
         </label>
-        <label>
-          <span>Recipe method: </span>
-          <textarea
-            onChange={(e) => setMethod(e.target.value)}
-            value={method}
-            required
-          />
-        </label>
-
         <label>
           <span>Recipe ingredients: </span>
           <div className='ingredients'>
@@ -86,6 +72,14 @@ const Create = () => {
             <em key={i}>{i}, </em>
           ))}
         </p>
+        <label>
+          <span>Recipe method: </span>
+          <textarea
+            onChange={(e) => setMethod(e.target.value)}
+            value={method}
+            required
+          />
+        </label>
         <label>
           <span>Cooking time (minutes) </span>
           <input
