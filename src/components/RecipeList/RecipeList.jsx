@@ -5,7 +5,7 @@ import Delete from '../../assets/delete.svg';
 import { projectFirestore } from '../../Firebase/config';
 
 const RecipeList = ({ recipes }) => {
-  const { mode } = useTheme();
+  const { mode, color } = useTheme();
   if (recipes.length === 0) {
     return <div className='error'>No recipes found...</div>;
   }
@@ -21,7 +21,9 @@ const RecipeList = ({ recipes }) => {
           <h3>{recipe.title}</h3>
           <p>{recipe.cookingTime} to make.</p>
           <div>{recipe.method.substring(0, 100)}...</div>
-          <Link to={`/recipes/${recipe.id}`}>Cook This</Link>
+          <Link to={`/recipes/${recipe.id}`} style={{ background: color }}>
+            Cook This
+          </Link>
           <img
             className='delete'
             src={Delete}

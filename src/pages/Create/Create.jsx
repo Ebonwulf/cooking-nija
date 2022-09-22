@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { projectFirestore } from '../../Firebase/config';
+import { useTheme } from '../../hooks/useTheme';
 import './Create.scss';
 
 const Create = () => {
@@ -11,6 +12,7 @@ const Create = () => {
   const [ingredients, setIngredients] = useState([]);
   const ingredientInput = useRef(null);
   const history = useHistory();
+  const { mode, color } = useTheme();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +42,7 @@ const Create = () => {
   };
 
   return (
-    <div className='create'>
+    <div className={`create ${mode}`}>
       <h2 className='page-title'>Add a new recipe</h2>
       <form onSubmit={handleSubmit}>
         <label>
@@ -61,7 +63,11 @@ const Create = () => {
               value={newIngredient}
               ref={ingredientInput}
             />
-            <button className='btn' onClick={handleAdd}>
+            <button
+              className='btn'
+              onClick={handleAdd}
+              style={{ background: color }}
+            >
               Add
             </button>
           </div>
@@ -89,7 +95,9 @@ const Create = () => {
             required
           />
         </label>
-        <button className='btn'>Submit</button>
+        <button className='btn' style={{ background: color }}>
+          Submit
+        </button>
       </form>
     </div>
   );
