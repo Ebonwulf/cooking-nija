@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { projectFirestore } from '../../Firebase/config';
 import { useTheme } from '../../hooks/useTheme';
 import './Create.scss';
@@ -11,7 +11,7 @@ const Create = () => {
   const [newIngredient, setNewIngredient] = useState('');
   const [ingredients, setIngredients] = useState([]);
   const ingredientInput = useRef(null);
-  const history = useHistory();
+  const navigate = useNavigate();
   const { mode, color } = useTheme();
 
   const handleSubmit = async (e) => {
@@ -25,7 +25,7 @@ const Create = () => {
 
     try {
       await projectFirestore.collection('recipes').add(doc);
-      history.push('/');
+      navigate('/');
     } catch (err) {
       console.log(err);
     }
@@ -66,8 +66,7 @@ const Create = () => {
             <button
               className='btn'
               onClick={handleAdd}
-              style={{ background: color }}
-            >
+              style={{ background: color }}>
               Add
             </button>
           </div>
